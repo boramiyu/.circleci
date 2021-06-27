@@ -1,4 +1,6 @@
- - step:
+---
+
+  - step:
       name: generate-dataset
       image: python:3.6
       command: python preprocess.py
