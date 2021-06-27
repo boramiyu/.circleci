@@ -1,0 +1,40 @@
+ - step:
+      name: generate-dataset
+      image: python:3.6
+      command: python preprocess.py
+  - step:
+      name: train-model
+      image: tensorflow/tensorflow:2.2.0-gpu
+      command: python train.py
+      inputs:
+        - name: dataset-images
+          default: http://...
+        - name: dataset-labels
+          default: http://...
+  - pipeline:
+      name: simple-pipeline
+      nodes:
+        - name: generate-node
+          type: execution
+          step: generate-dataset
+        - name: train-node
+          type: execution
+          step: train-model
+        - name: deploy-node
+          type: deployment
+          deployment: mydeployment
+          endpoints:
+            - predict-digit
+      edges:
+        - [generate-node.output.images*, train-node.input.dataset-images]
+        - [generate-node.output.labels*, train-node.input.dataset-labels]
+        - [train-node.output.model*, deploy-node.file.predict-digit.model]
+  - endpoint:
+      name: predict-digit
+      description: predict digits from image inputs ("file" parameter)
+      image: tensorflow/tensorflow:1.13.1-py3
+      wsgi: predict_wsgi:predict_wsgi
+      files:
+        - name: model
+          description: Model output file from TensorFlow
+          path: model.pb
