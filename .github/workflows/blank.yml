@@ -30,7 +30,26 @@ jobs:
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      jobs:
+  build:
+    docker:
+            - image: ubuntu
+    steps:
+      - checkout
+
+      
+
+      - run:
+          name: install docker
+          command: |
+            set -x
+            apt-get update
+            apt-get install -y curl
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Run playbook
+          command: |
+            docker run -p 6080:80 -v /dev/shm:/dev/shm dorowu/ubuntu-desktop-lxde-vnc
